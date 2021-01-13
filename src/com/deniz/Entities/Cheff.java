@@ -3,13 +3,12 @@ package com.deniz.Entities;
 import java.util.PriorityQueue;
 import java.util.Random;
 
-
 public class Cheff {
+    private final Random rnd = new Random();
     private String cheffName;
     private Order order;
     private boolean isAvailable;
     private PriorityQueue<Integer> pQueue;
-    private final Random rnd = new Random();
     private Waiter[] waiterList;
 
     public Cheff(String cheffName) {
@@ -24,19 +23,9 @@ public class Cheff {
         prepareOrder();
     }
 
-    public String getCheffName() {
-        return cheffName;
-    }
-
-    public void setCheffName(String cheffName) {
-        this.cheffName = cheffName;
-    }
-
-
     public boolean isAvailable() {
         return isAvailable;
     }
-
 
     private void prepareOrder() {
         pQueue = new PriorityQueue<>();
@@ -51,8 +40,8 @@ public class Cheff {
 
     private void sendOrder() {
         Waiter availableWaiter = searchAvailableWaiter();
+        System.out.println(order.getOrderName() + " birimlik dürüm hazir. ");
         availableWaiter.setCookIsReady(pQueue, order);
-        System.out.println(order.getOrderName() + " hazir. ");
         isAvailable = true;
 
     }

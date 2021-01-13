@@ -4,8 +4,8 @@ import java.util.PriorityQueue;
 
 public class Waiter {
     private static int aditionCount = 0;
-    private static Cheff[] cheffs = {new Cheff("Sef 1"), new Cheff("Sef 2")};
-    private String waiterName;
+    private static final Cheff[] cheffs = {new Cheff("Sef 1"), new Cheff("Sef 2")};
+    private final String waiterName;
     private Order order;
     private boolean isAvailable;
     private Desk orderDesk;
@@ -22,11 +22,6 @@ public class Waiter {
         this.waiters = waiters;
     }
 
-    public void setCookIsReady(PriorityQueue<Integer> pQueue, Order whichOrder) {
-        this.pQueue = pQueue;
-        order = whichOrder;
-    }
-
     public boolean isAvailable() {
         return isAvailable;
     }
@@ -37,18 +32,24 @@ public class Waiter {
 
 
     // Musteri masa sectigi zaman atamasi yapiliyor.
+
     public void setOrderDesk(Desk orderDesk) {
         this.orderDesk = orderDesk;
     }
-
     // Musterinin siparisini aldigi yer
+
     public void setOrderSize(int orderSize) {
         this.order.setOrderName(orderSize);
         aditionSendToCheff();
     }
-
     public String getWaiterName() {
         return waiterName;
+    }
+
+    public void setCookIsReady(PriorityQueue<Integer> pQueue, Order whichOrder) {
+        this.pQueue = pQueue;
+        order = whichOrder;
+        deliverOrder();
     }
 
     private void deliverOrder() {

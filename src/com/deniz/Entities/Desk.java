@@ -35,8 +35,4 @@ public class Desk {
     public String getDeskName() {
         return deskName;
     }
-
-
-    // sure bilgisi islenecek
-
 }

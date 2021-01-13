@@ -9,7 +9,7 @@ public class Customer {
     private Desk customerDesk;
     private Desk tempDesk;
     private Waiter customerWaiter;
-    private Random rnd;
+    private final Random rnd = new Random();
 
 
     public Customer(int customerId) {
@@ -29,7 +29,8 @@ public class Customer {
         if (desk.isEmtpy()) {
             this.customerDesk = desk;
             tempDesk = desk;
-            System.out.println("Musteri"+customerId+", "+desk.getDeskName() + "\'e oturdu.");
+            System.out.println("Musteri_" + customerId + ", " + desk.getDeskName() + "'e oturdu.");
+
             return true;
         }
         return false;
@@ -40,19 +41,23 @@ public class Customer {
             this.customerWaiter = waiter;
             customerWaiter.setOrderDesk(tempDesk);
             customerDesk.setCustomerOnDesk(this);
-            System.out.println("Musteri"+customerId+", "+waiter.getWaiterName() + "\'i cagirdi.");
+            System.out.println("Musteri_" + customerId + ", " + waiter.getWaiterName() + "'i cagirdi.");
             return true;
         }
         return false;
     }
 
     // Musterinin siparis verme kismi
-    public void setOrderDesk() {
-        customerWaiter.setOrderSize(9);//rnd.nextInt(100));
+    public void setOrderFromDesk() {
+        customerWaiter.setOrderSize(rnd.nextInt(50));
     }
 
-    public void eat(PriorityQueue<Integer> pQueue){
-        System.out.print(pQueue.poll()+" ");
+    public void eat(PriorityQueue<Integer> pQueue) {
+        System.out.println("Musteri_" + customerId + " yemegini yemeye basladi.");
+        while (!pQueue.isEmpty())
+            System.out.print(pQueue.poll() + " ");
+        System.out.println("Musteri_" + customerId + " yemegini bitirdi.");
+        System.out.println("===============  ========= ===============");
     }
 
 }
