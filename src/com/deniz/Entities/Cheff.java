@@ -1,14 +1,14 @@
 package com.deniz.Entities;
 
-import java.util.PriorityQueue;
 import java.util.Random;
+import java.util.concurrent.PriorityBlockingQueue;
 
 public class Cheff {
     private final Random rnd = new Random();
-    private String cheffName;
+    private final String cheffName;
     private Order order;
     private boolean isAvailable;
-    private PriorityQueue<Integer> pQueue;
+    private PriorityBlockingQueue<Integer> pQueue;
     private Waiter[] waiterList;
 
     public Cheff(String cheffName) {
@@ -17,8 +17,9 @@ public class Cheff {
     }
 
 
-    public void setOrder(Order order) {
+    public void setOrder(Order order, Waiter waiter) {
         this.order = order;
+        waiter.setAvailable(true);
         isAvailable = false;
         prepareOrder();
     }
@@ -28,7 +29,7 @@ public class Cheff {
     }
 
     private void prepareOrder() {
-        pQueue = new PriorityQueue<>();
+        pQueue = new PriorityBlockingQueue<>();
 
         int orderSize = order.getOrderName();
 
