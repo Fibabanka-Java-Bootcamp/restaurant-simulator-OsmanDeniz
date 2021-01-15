@@ -1,15 +1,15 @@
 package com.deniz.Entities;
 
-import java.util.PriorityQueue;
 import java.util.Random;
+import java.util.concurrent.PriorityBlockingQueue;
 
 public class Customer {
 
+    private final Random rnd = new Random();
     private int customerId;
     private Desk customerDesk;
     private Desk tempDesk;
     private Waiter customerWaiter;
-    private final Random rnd = new Random();
 
 
     public Customer(int customerId) {
@@ -52,11 +52,11 @@ public class Customer {
         customerWaiter.setOrderSize(rnd.nextInt(50));
     }
 
-    public void eat(PriorityQueue<Integer> pQueue) {
+    public void eat(PriorityBlockingQueue<Integer> pQueue) {
         System.out.println("Musteri_" + customerId + " yemegini yemeye basladi.");
         while (!pQueue.isEmpty())
             System.out.print(pQueue.poll() + " ");
-        System.out.println("Musteri_" + customerId + " yemegini bitirdi.");
+        System.out.println("\n Musteri_" + customerId + " yemegini bitirdi.");
         System.out.println("===============  ========= ===============");
     }
 
