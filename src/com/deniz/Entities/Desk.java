@@ -1,38 +1,37 @@
 package com.deniz.Entities;
 
 public class Desk {
-    private String deskName;
-    private int spendTime;
-    private boolean isEmtpy;
+    private boolean isAvaliable;
+    private final int deskID;
+    private Customer customer;
 
-    public Customer getCustomerOnDesk() {
-        return customerOnDesk;
+    public Desk(int deskID, boolean isAvaliable) {
+        this.deskID = deskID;
+        this.isAvaliable = isAvaliable;
     }
 
-    private Customer customerOnDesk;
-
-
-    public void setCustomerOnDesk(Customer customerOnDesk) {
-        this.customerOnDesk = customerOnDesk;
+    public Desk changeState() {
+        this.setAvaliable(!this.isAvaliable);
+        return this;
     }
 
-
-    public boolean isEmtpy() {
-        return isEmtpy;
+    public boolean isAvaliable() {
+        return isAvaliable;
     }
 
-    public void setEmtpy(boolean emtpy) {
-        isEmtpy = emtpy;
+    private void setAvaliable(boolean avaliable) {
+        isAvaliable = avaliable;
     }
 
-    public Desk(String name) {
-
-        this.deskName = name;
-        spendTime = 1000;
-        isEmtpy = true;
+    public int getDeskID() {
+        return deskID;
     }
 
-    public String getDeskName() {
-        return deskName;
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 }

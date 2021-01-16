@@ -4,60 +4,51 @@ import java.util.Random;
 import java.util.concurrent.PriorityBlockingQueue;
 
 public class Cheff {
+    private final int cheffID;
     private final Random rnd = new Random();
-    private final String cheffName;
+    private boolean isAvaliable;
     private Order order;
-    private boolean isAvailable;
-    private PriorityBlockingQueue<Integer> pQueue;
-    private Waiter[] waiterList;
+    private Waiter[] waiters;
+    private PriorityBlockingQueue<Integer> wrap;
 
-    public Cheff(String cheffName) {
-        this.cheffName = cheffName;
-        isAvailable = true;
+    public Cheff(int cheffID, boolean isAvaliable) {
+        this.cheffID = cheffID;
+        this.isAvaliable = isAvaliable;
+        isAvaliable = false;
+        order = null;
     }
 
+    public int getCheffID() {
+        return cheffID;
+    }
 
-    public void setOrder(Order order, Waiter waiter) {
+    public boolean isAvaliable() {
+        return isAvaliable;
+    }
+
+    public void setAvaliable(boolean avaliable) {
+        System.out.println("Cheff_" + cheffID + ", " + order.getDesk().getDeskID() + " numarada oturan Musteri_" + order.getDesk().getCustomer().getCustomerID() + "'in siparisini hazirlamak icin mutfaga girdi.");
+        isAvaliable = avaliable;
+    }
+
+    public void setOrder(Order order) {
+        System.out.println("Musteri_" + order.getDesk().getCustomer().getCustomerID() + "'in siparisi Cheff_" + cheffID + "'ye ulasti.");
         this.order = order;
-        waiter.setAvailable(true);
-        isAvailable = false;
-        prepareOrder();
+        wrap = new PriorityBlockingQueue<>();
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public void setWaiters(Waiter[] waiters) {
+        this.waiters = waiters;
     }
 
-    private void prepareOrder() {
-        pQueue = new PriorityBlockingQueue<>();
-
-        int orderSize = order.getOrderName();
-
-        for (int i = 0; i < orderSize; i++) {
-            pQueue.add(rnd.nextInt(1000));
+    public PriorityBlockingQueue<Integer> prepareOrder() {
+        for (int i = 0; i < order.getWrapSize(); i++) {
+            wrap.add(rnd.nextInt(30));
         }
-        sendOrder();
-    }
-
-    private void sendOrder() {
-        Waiter availableWaiter = searchAvailableWaiter();
-        System.out.println(order.getOrderName() + " birimlik dürüm hazir. ");
-        availableWaiter.setCookIsReady(pQueue, order);
-        isAvailable = true;
-
-    }
-
-    private Waiter searchAvailableWaiter() {
-        int i = 0;
-        while (true) {
-            if (waiterList[i].isAvailable()) return waiterList[i];
-            if (i < waiterList.length) i++;
-            else i = 0;
-        }
+        order.setReady(true);
+        isAvaliable = true;
+        return wrap;
     }
 
 
-    public void setWaiterList(Waiter[] waiterList) {
-        this.waiterList = waiterList;
-    }
 }

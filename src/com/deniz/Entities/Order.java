@@ -1,17 +1,26 @@
 package com.deniz.Entities;
 
 public class Order {
-    private final String aditionName;
-    private final Desk orderDesk;
+    private final int orderID;
+    private final Desk desk;
     private boolean isReady;
-    private int orderName;
+    private boolean isHandOfCheff;
+    private int wrapSize;
 
-
-    public Order(String aditionName, Desk orderDesk) {
-        this.aditionName = aditionName;
-        this.orderDesk = orderDesk;
+    public Order(int orderID, Desk desk) {
+        this.orderID = orderID;
+        this.desk = desk;
         isReady = false;
+        isHandOfCheff = false;
+        wrapSize = 0;
+    }
 
+    public int getOrderID() {
+        return orderID;
+    }
+
+    public Desk getDesk() {
+        return desk;
     }
 
     public boolean isReady() {
@@ -22,15 +31,21 @@ public class Order {
         isReady = ready;
     }
 
-    public Desk getOrderDesk() {
-        return orderDesk;
+    public boolean isHandOfCheff() {
+        return isHandOfCheff;
     }
 
-    public int getOrderName() {
-        return orderName;
+    public void setHandOfCheff(boolean handOfCheff) {
+        isHandOfCheff = handOfCheff;
     }
 
-    public void setOrderName(int orderName) {
-        this.orderName = orderName;
+    public int getWrapSize() {
+        return wrapSize;
+    }
+
+    public void setWrapSize(int wrapSize) {
+        this.wrapSize = wrapSize;
+        System.out.println("Masa_" + desk.getDeskID() + "'den, Musteri_" + desk.getCustomer().getCustomerID() + "'in "
+                + wrapSize + " birimlik durum siparisi olusturuldu.");
     }
 }

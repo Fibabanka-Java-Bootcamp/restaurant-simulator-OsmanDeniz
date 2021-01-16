@@ -4,60 +4,60 @@ import java.util.Random;
 import java.util.concurrent.PriorityBlockingQueue;
 
 public class Customer {
-
+    private final int customerID;
+    private boolean isSit;
+    private boolean isServiceOpen;
     private final Random rnd = new Random();
-    private int customerId;
-    private Desk customerDesk;
-    private Desk tempDesk;
-    private Waiter customerWaiter;
 
-
-    public Customer(int customerId) {
-        this.customerId = customerId;
+    public Customer(int customerID, boolean isSit) {
+        this.customerID = customerID;
+        this.isSit = isSit;
+        this.isServiceOpen = false;
     }
 
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
-    }
-
-
-    public boolean selectDesk(Desk desk) {
-        if (desk.isEmtpy()) {
-            this.customerDesk = desk;
-            tempDesk = desk;
-            System.out.println("Musteri_" + customerId + ", " + desk.getDeskName() + "'e oturdu.");
-
+    public boolean selectDesk(Desk customerDesk) {
+        if (customerDesk.isAvaliable()) {
+            System.out.println("Musteri_" + customerID + ", Masa_" + customerDesk.getDeskID() + "'e oturdu.");
             return true;
         }
         return false;
     }
 
     public boolean callWaiter(Waiter waiter) {
-        if (waiter.isAvailable()) {
-            this.customerWaiter = waiter;
-            customerWaiter.setOrderDesk(tempDesk);
-            customerDesk.setCustomerOnDesk(this);
-            System.out.println("Musteri_" + customerId + ", " + waiter.getWaiterName() + "'i cagirdi.");
+        if (waiter.isAvaliable()) {
+            System.out.println("Musteri_" + customerID + ", Garson_" + waiter.getWaiterID() + "'i cagirdi.");
             return true;
         }
         return false;
     }
 
-    // Musterinin siparis verme kismi
-    public void setOrderFromDesk() {
-        customerWaiter.setOrderSize(rnd.nextInt(50));
+    public void eatWrap(PriorityBlockingQueue<Integer> wrap) {
+        System.out.println("\nMusteri_" + customerID + "'nin durumu eline ulasti, kurt gibi acikmis olmali ki boyle istahli yiyor.");
+        while (!wrap.isEmpty())
+            System.out.print(wrap.poll() + " ");
     }
 
-    public void eat(PriorityBlockingQueue<Integer> pQueue) {
-        System.out.println("Musteri_" + customerId + " yemegini yemeye basladi.");
-        while (!pQueue.isEmpty())
-            System.out.print(pQueue.poll() + " ");
-        System.out.println("\n Musteri_" + customerId + " yemegini bitirdi.");
-        System.out.println("===============  ========= ===============");
+    public int getWrapSize() {
+        return rnd.nextInt(40);
     }
 
+    public int getCustomerID() {
+        return customerID;
+    }
+
+    public boolean isSit() {
+        return isSit;
+    }
+
+    public void setSit(boolean sit) {
+        isSit = sit;
+    }
+
+    public boolean isServiceOpen() {
+        return isServiceOpen;
+    }
+
+    public void setServiceOpen(boolean serviceOpen) {
+        isServiceOpen = serviceOpen;
+    }
 }
